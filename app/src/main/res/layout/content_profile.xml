@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:paddingTop="80dp"
     tools:context="com.twisstosin.andela_alc_challenge.ProfileActivity"
-    tools:showIn="@layout/activity_profile"
-    app:behavior_overlapTop="140dp">
+    tools:showIn="@layout/activity_profile">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,27 +52,96 @@
                     android:id="@+id/username"
                     style="@style/SubTitle"
                     android:text="Just a Username" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/Name"
+                            android:text="233"
+
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="repos"
+                            android:gravity="center_horizontal"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/Name"
+                            android:text="233"
+
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="followers"
+                            android:gravity="center_horizontal"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/Name"
+                            android:text="233"
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="following"
+                            android:gravity="center_horizontal"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/brief"
                     style="@style/Brief"
                     android:layout_margin="5dp"
-                    android:text="This is as short message saying who you are and what you like to do." />
+                    android:text="GitHub Url" />
 
-                <com.twisstosin.andela_alc_challenge.AutoFitGridLayout
-                    android:id="@+id/links"
-                    android:layout_width="match_parent"
+                <Button
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/divider"
-                    android:gravity="center"
-                    android:paddingBottom="@dimen/social_media_vertical_padding"
-                    android:paddingTop="@dimen/social_media_vertical_padding">
-
-
-                </com.twisstosin.andela_alc_challenge.AutoFitGridLayout>
-
-
+                    android:text="SHARE"
+                    android:textColor="@color/accent"
+                    style="@style/Base.Widget.AppCompat.Button"
+                    android:layout_gravity="center_horizontal"/>
+                <View
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="@drawable/divider"/>
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TOP REPO"
+                    android:layout_gravity="center_horizontal"/>
                 <LinearLayout
                     android:id="@+id/app_holder"
                     android:layout_width="match_parent"
@@ -112,7 +180,7 @@
                                 style="@style/Name"
                                 android:layout_width="wrap_content"
                                 android:gravity="left"
-                                android:text="Your App Name" />
+                                android:text="Your Repo Name" />
 
                             <TextView
                                 android:id="@+id/app_title"
@@ -124,15 +192,7 @@
                         </LinearLayout>
                     </RelativeLayout>
 
-                    <com.vansuita.materialabout.views.AutoFitGridLayout
-                        android:id="@+id/actions"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:orientation="vertical">
 
-                    </com.vansuita.materialabout.views.AutoFitGridLayout>
                 </LinearLayout>
             </LinearLayout>
 

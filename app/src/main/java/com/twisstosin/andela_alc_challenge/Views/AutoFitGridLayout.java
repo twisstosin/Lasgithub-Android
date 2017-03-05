@@ -1,4 +1,4 @@
-package com.twisstosin.andela_alc_challenge;
+package com.twisstosin.andela_alc_challenge.Views;
 
 import android.content.Context;
 import android.util.AttributeSet;

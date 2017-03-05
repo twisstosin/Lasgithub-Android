@@ -1,4 +1,4 @@
-package com.twisstosin.andela_alc_challenge;
+package com.twisstosin.andela_alc_challenge.Views;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,6 +7,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.twisstosin.andela_alc_challenge.R;
 
 /**
  * Created by twisstosin on 3/5/2017.
@@ -29,7 +31,7 @@ public class SlantView extends View {
 
         int w = getWidth(), h = getHeight();
         paint.setStrokeWidth(2);
-        paint.setColor(Color.WHITE);
+        paint.setColor(getResources().getColor(R.color.white));
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setAntiAlias(true);
 
