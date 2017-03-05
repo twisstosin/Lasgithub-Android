@@ -19,7 +19,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/black_overlay" />
+                android:background="@color/primary_overlay" />
             <View
                 android:id="@+id/slantView_anchor"
                 android:layout_width="match_parent"
