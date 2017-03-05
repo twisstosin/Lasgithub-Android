@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:id="@+id/container_song"
+>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/profile_photo"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:src="@drawable/davido"
+            android:layout_alignParentLeft="true"
+            android:padding="1dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/profile_photo"
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:paddingLeft="12dp"
+            android:id="@+id/linearLayout">
+
+
+            <TextView
+                android:id="@+id/user_name"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="User Name"
+                android:ellipsize="end"
+                android:textColor="@color/aluminum"
+                android:singleLine="true"
+                android:textSize="8.36pt" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/aluminum" />
+</LinearLayout>

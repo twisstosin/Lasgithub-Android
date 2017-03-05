@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.twisstosin.andela_alc_challenge.ProfileActivity"
+    tools:showIn="@layout/activity_profile"
+    app:behavior_overlapTop="140dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/davido"
+            android:layout_gravity="center"/>
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/card_holder"
+        style="@style/Card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp">
+
+                <TextView
+                    android:id="@+id/name"
+                    style="@style/Name"
+                    android:paddingTop="10dp"
+                    android:text="Your Full Name" />
+
+                <TextView
+                    android:id="@+id/username"
+                    style="@style/SubTitle"
+                    android:text="Just a Username" />
+
+                <TextView
+                    android:id="@+id/brief"
+                    style="@style/Brief"
+                    android:layout_margin="5dp"
+                    android:text="This is as short message saying who you are and what you like to do." />
+
+                <com.twisstosin.andela_alc_challenge.AutoFitGridLayout
+                    android:id="@+id/links"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/divider"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/social_media_vertical_padding"
+                    android:paddingTop="@dimen/social_media_vertical_padding">
+
+
+                </com.twisstosin.andela_alc_challenge.AutoFitGridLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/app_holder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/divider"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/social_media_vertical_padding">
+
+                    <RelativeLayout
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            android:id="@+id/app_icon"
+                            android:layout_width="@dimen/app_icon_size"
+                            android:layout_height="@dimen/app_icon_size"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="15dp"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/ic_launcher" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@id/app_icon"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/app_name"
+                                style="@style/Name"
+                                android:layout_width="wrap_content"
+                                android:gravity="left"
+                                android:text="Your App Name" />
+
+                            <TextView
+                                android:id="@+id/app_title"
+                                style="@style/TextLabel"
+                                android:gravity="left"
+                                android:text="Just a sub title" />
+
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <com.vansuita.materialabout.views.AutoFitGridLayout
+                        android:id="@+id/actions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                    </com.vansuita.materialabout.views.AutoFitGridLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </FrameLayout>
+    </android.support.v7.widget.CardView>
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
