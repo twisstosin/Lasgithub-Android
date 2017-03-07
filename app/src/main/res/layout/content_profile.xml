@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="80dp"
     tools:context="com.twisstosin.andela_alc_challenge.ProfileActivity"
     tools:showIn="@layout/activity_profile">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="50dp">
         <com.mikhaellopez.circularimageview.CircularImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
