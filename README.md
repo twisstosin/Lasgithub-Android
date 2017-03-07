@@ -2,8 +2,11 @@
 ![alt tag](https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/mipmap-hdpi/ic_launcher.png)
 
 #Screenshots
-![alt tag](https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot.png) ![alt tag](https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot_2.png) ![alt tag](https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot_3.png)
-
+<div style="text-align:center" markdown="1">
+<img src="https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot.png" width="200"/>
+<img src="https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot_2.png" width="200"/>
+<img src="https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot_3.png" width="200"/>
+</div>
 # License
 
 Copyright 2017 Tosin Omotoyinbo
