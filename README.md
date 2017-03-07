@@ -2,10 +2,11 @@
 ![alt tag](https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/mipmap-hdpi/ic_launcher.png)
 
 #Screenshots
-<div style="align:center" markdown="1">
-<img src="https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot.png" width="50%"/>
-<img src="https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot_2.png" width="50%"/>
-<img src="https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot_3.png" width="50%"/>
+<div align="center" markdown="1">
+
+<img src="https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot.png" width="40%"/>
+<img src="https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot_2.png" width="40%"/>
+<img src="https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot_3.png" width="40%"/>
 </div>
 # License
 
