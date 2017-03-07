@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingTop="50dp">
+        android:paddingTop="70dp">
         <com.mikhaellopez.circularimageview.CircularImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -69,8 +69,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:layout_gravity="center">
                         <TextView
+                            android:id="@+id/repo_num"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/Name"
@@ -78,19 +80,22 @@
                             android:textColor="@color/white"
                             />
                         <TextView
+                            android:id="@+id/repo_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="repos"
                             android:gravity="center_horizontal"
-                            android:textSize="16sp"
+                            android:textSize="10sp"
                             android:textColor="@color/white"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:layout_gravity="center">
                         <TextView
+                            android:id="@+id/following_num"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/Name"
@@ -98,20 +103,22 @@
                             android:textColor="@color/white"
                             />
                         <TextView
+                            android:id="@+id/following_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="following"
                             android:gravity="center_horizontal"
-                            android:textSize="16sp"
+                            android:textSize="10sp"
                             android:textColor="@color/white"/>
                     </LinearLayout>
                     <LinearLayout
-
+                        android:layout_gravity="center"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_weight="1">
                         <TextView
+                            android:id="@+id/followers_num"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             style="@style/Name"
@@ -120,23 +127,25 @@
 
                             />
                         <TextView
+                            android:id="@+id/followers_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="followers"
                             android:gravity="center_horizontal"
-                            android:textSize="16sp"
+                            android:textSize="10sp"
                             android:textColor="@color/white"
                             />
                     </LinearLayout>
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/brief"
+                    android:id="@+id/github_url"
                     style="@style/Brief"
                     android:layout_margin="5dp"
                     android:text="GitHub Url" />
 
                 <Button
+                    android:id="@+id/share_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="SHARE"
@@ -152,6 +161,7 @@
                     android:layout_height="1dp"
                     android:background="@drawable/divider"/>
                 <TextView
+                    android:id="@+id/repo_update_text"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:layout_width="wrap_content"
@@ -192,14 +202,14 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/app_name"
+                                android:id="@+id/top_repo_text"
                                 style="@style/Name"
                                 android:layout_width="wrap_content"
                                 android:gravity="left"
                                 android:text="Your Repo Name" />
 
                             <TextView
-                                android:id="@+id/app_url"
+                                android:id="@+id/top_repo_text2"
                                 style="@style/TextLabel"
                                 android:gravity="left"
                                 android:text="Just a sub title" />

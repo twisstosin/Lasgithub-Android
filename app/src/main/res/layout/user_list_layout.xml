@@ -16,8 +16,8 @@
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/profile_photo"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/davido"
             android:layout_alignParentLeft="true"
             android:padding="1dp"

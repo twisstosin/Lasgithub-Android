@@ -15,9 +15,9 @@ public class App extends Application {
         super.onCreate();
     //    Toast.makeText(this, "App Started", Toast.LENGTH_SHORT).show();
 
-        //FontsOverride.setDefaultFont(this, "DEFAULT", "fonts/proximanova_regular.ttf");
-        //FontsOverride.setDefaultFont(this, "MONOSPACE", "fonts/proximanova_regular.ttf");
-        //FontsOverride.setDefaultFont(this, "SANS_SERIF", "fonts/proximanova_regular.ttf");
+        FontsOverride.setDefaultFont(this, "DEFAULT", "fonts/gothic.ttf");
+        FontsOverride.setDefaultFont(this, "MONOSPACE", "fonts/gothic.ttf");
+        FontsOverride.setDefaultFont(this, "SANS_SERIF", "fonts/gothic.ttf");
         Fresco.initialize(this);
 
     }
