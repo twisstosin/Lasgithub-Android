@@ -20,9 +20,9 @@
             android:stretchMode="columnWidth"/>
     </android.support.v4.widget.SwipeRefreshLayout>
     <TextView
-        android:id="@+id/empty_lib_text"
+        android:id="@+id/empty_users_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Swipe down to reload githubbers \n in lagos"/>
+        android:text="Swipe down to reload java githubbers \n in lagos"/>
 </RelativeLayout>

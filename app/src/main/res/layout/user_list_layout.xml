@@ -14,13 +14,15 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <ImageView
+        <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/profile_photo"
             android:layout_width="65dp"
             android:layout_height="65dp"
             android:src="@drawable/davido"
             android:layout_alignParentLeft="true"
-            android:padding="1dp" />
+            android:padding="1dp"
+            app:civ_border_color="@color/primary"
+            app:civ_border_width="2.5dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:text="User Name"
                 android:ellipsize="end"
-                android:textColor="@color/aluminum"
+                android:textColor="@color/primary"
                 android:singleLine="true"
                 android:textSize="8.36pt" />
 

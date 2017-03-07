@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.twisstosin.andela_alc_challenge.Models.GitHubUser;
 
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.Locale;
 import com.twisstosin.andela_alc_challenge.R;
 
 /**
- * Created by twisstosin on 11/27/2016.
+ * Created by twisstosin on 3/6/2017.
  */
 
 public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAdapter.MyViewHolder> {
@@ -69,7 +70,7 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
 
             Glide.with(context)
                     .load(gitHubUser.profileImageUrl)
-                    .placeholder(R.drawable.davido)
+                    .placeholder(R.drawable.ic_person_black_24dp)
                     .into(holder.imageView);
 
 
@@ -88,13 +89,13 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
     public class MyViewHolder extends RecyclerView.ViewHolder
     {
         TextView artisteTextView;
-        ImageView imageView;
+        CircularImageView imageView;
 
         //CardView container;
         public MyViewHolder(View view) {
             super(view);
             artisteTextView = (TextView) view.findViewById(R.id.user_name);
-            imageView = (ImageView)view.findViewById(R.id.profile_photo);
+            imageView = (CircularImageView)view.findViewById(R.id.profile_photo);
 
           //  container = (CardView)view.findViewById(R.id.card_container);
 

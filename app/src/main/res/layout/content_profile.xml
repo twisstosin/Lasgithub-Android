@@ -137,12 +137,15 @@
                     android:text="GitHub Url" />
 
                 <Button
-                    android:layout_width="150dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="SHARE"
                     android:textSize="10dp"
+                    android:padding="10dp"
+                    android:drawableStart="@drawable/ic_share_white_24dp"
                     style="@style/SpecialButton"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_gravity="center_horizontal"
+                    android:drawableLeft="@drawable/ic_share_white_24dp" />
                 <View
                     android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"

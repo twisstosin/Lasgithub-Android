@@ -23,11 +23,11 @@ import okhttp3.Response;
 /**
  * Created by twisstosin on 3/5/2017.
  */
-public class JSONParser {
+class JSONParser {
     private OkHttpClient client = new OkHttpClient();
 
     // constructor
-    public JSONParser() {}
+    JSONParser() {}
 
     private String run(String url) throws IOException {
         Request request = new Request.Builder()
@@ -38,14 +38,14 @@ public class JSONParser {
         return response.body().string();
     }
 
-    public JSONArray getJsonObject (String url) throws JSONException {
+    private JSONObject getJsonObject(String url) throws JSONException {
         // Making HTTP request
-        JSONArray Jobject = null;
+        JSONObject Jobject = null;
         try {
 
             String jsonData = run(url);
 
-            Jobject = new JSONArray(jsonData);
+            Jobject = new JSONObject(jsonData);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,12 +53,14 @@ public class JSONParser {
         return Jobject;
     }
 
-    public List<GitHubUser> getUsers () throws UnsupportedEncodingException {
+    List<GitHubUser> getUsers() throws UnsupportedEncodingException {
         List<GitHubUser> userList = null;
 
         String url =  ApiData.API_ROOT_URL+"/search/users?q=+location:lagos+language:java";
+        Log.d("JSONPack", "Started trying");
         try {
-            JSONArray objects = getJsonObject(url);
+            JSONObject objecter = getJsonObject(url);
+            JSONArray objects = objecter.getJSONArray("items");
             Log.d("JSONPack", "Checked");
             if(objects != null) {
                 userList = new ArrayList<>();
@@ -67,7 +69,7 @@ public class JSONParser {
 
                     JSONObject track = objects.getJSONObject(i);
 
-                    String userName = track.getString(ApiData.API_USER_NAME);
+                    String userName = track.getString(ApiData.API_USER_NAME).toLowerCase();
 
                     String serverProfilePicUrl = track.getString(ApiData.API_AVATAR_URL);
 
@@ -79,9 +81,10 @@ public class JSONParser {
                     userList.add(user);
                 }
             }
-
+            Log.d("JSONPack", "Ended Try");
         } catch (JSONException e) {
             e.printStackTrace();
+            Log.d("JSONPack", "Exeption with tried "+ e.getLocalizedMessage());
         }
         return userList;
     }
