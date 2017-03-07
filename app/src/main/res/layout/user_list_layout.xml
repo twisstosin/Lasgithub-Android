@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="13dp">
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/profile_photo"
@@ -52,5 +52,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/aluminum" />
+        android:layout_marginLeft="75dp"
+        android:background="@color/black_overlay" />
 </LinearLayout>

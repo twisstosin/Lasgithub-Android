@@ -1,7 +1,10 @@
 # Lasgitgub
-![alt tag](https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/mipmap/ic_launcher.png)
+![alt tag](https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/mipmap-hdpi/ic_launcher.png)
 
 #Screenshots
+![alt tag](https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot.png)
+![alt tag](https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot_2.png)
+![alt tag](https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot_3.png)
 
 # License
 
