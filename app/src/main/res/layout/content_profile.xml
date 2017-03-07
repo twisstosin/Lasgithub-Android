@@ -13,6 +13,7 @@
         android:orientation="vertical"
         android:paddingTop="70dp">
         <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/profile_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/davido"
@@ -142,7 +143,8 @@
                     android:id="@+id/github_url"
                     style="@style/Brief"
                     android:layout_margin="5dp"
-                    android:text="GitHub Url" />
+                    android:autoLink="web"
+                    android:text="github.com/twisstosin" />
 
                 <Button
                     android:id="@+id/share_btn"

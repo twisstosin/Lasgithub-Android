@@ -67,13 +67,13 @@ class JSONParser {
                 Log.d("JSONPack", "Checked2");
                 for (int i = 0; i < objects.length(); i++) {
 
-                    JSONObject track = objects.getJSONObject(i);
+                    JSONObject jsonUser = objects.getJSONObject(i);
 
-                    String userName = track.getString(ApiData.API_USER_NAME).toLowerCase();
+                    String userName = jsonUser.getString(ApiData.API_USER_NAME).toLowerCase();
 
-                    String serverProfilePicUrl = track.getString(ApiData.API_AVATAR_URL);
+                    String serverProfilePicUrl = jsonUser.getString(ApiData.API_AVATAR_URL);
 
-                    String serverProfileUrl = track.getString(ApiData.API_PROFILE_URL);
+                    String serverProfileUrl = jsonUser.getString(ApiData.API_PROFILE_URL);
 
 
                     GitHubUser user = new GitHubUser(serverProfileUrl,userName,serverProfilePicUrl);
@@ -82,10 +82,43 @@ class JSONParser {
                 }
             }
             Log.d("JSONPack", "Ended Try");
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             Log.d("JSONPack", "Exeption with tried "+ e.getLocalizedMessage());
         }
         return userList;
+    }
+
+    public GitHubUser getProfile(GitHubUser gitHubUser) {
+        GitHubUser user = null;
+
+        String url =  ApiData.API_ROOT_URL+"/users/"+gitHubUser.Username;
+        Log.d("JSONPack", "Started trying");
+        try {
+            JSONObject objects = getJsonObject(url);
+            Log.d("JSONPack", "Checked");
+            if(objects != null) {
+                user = gitHubUser;
+                Log.d("JSONPack", "Checked2");
+
+                    String fullName = objects.getString(ApiData.API_NAME);
+
+                    String followersCount = objects.getString(ApiData.API_FOLLOWERS);
+
+                    String followingCount = objects.getString(ApiData.API_FOLLOWING);
+
+                    String reposCount = objects.getString(ApiData.API_REPOS);
+
+                    user.fullName = fullName;
+                    user.reposCount = reposCount;
+                    user.followersCount = followersCount;
+                    user.followingCount = followingCount;
+            }
+            Log.d("JSONPack", "Ended Try");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("JSONPack", "Exeption with tried "+ e.getLocalizedMessage());
+        }
+        return user;
     }
 }

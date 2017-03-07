@@ -78,13 +78,9 @@
         <item name="android:paddingBottom">15dp</item>
     </style>
 
-    <style name="Social" parent="@style/TextLabel">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_margin">0dp</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:padding">3dp</item>
+    <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 </resources>

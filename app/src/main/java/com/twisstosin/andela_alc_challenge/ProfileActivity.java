@@ -1,5 +1,6 @@
 package com.twisstosin.andela_alc_challenge;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -12,7 +13,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.mikhaellopez.circularimageview.CircularImageView;
+import com.twisstosin.andela_alc_challenge.Models.GitHubUser;
 
 import java.util.Locale;
 
@@ -21,6 +28,11 @@ public class ProfileActivity extends AppCompatActivity {
     Button shareProfile;
 
     Typeface typeface,typefaceBold;
+
+    GitHubUser user;
+
+    ImageView backgroundImage;
+    CircularImageView profileImage;
 
     TextView nameText,usernameText,repoText,followingText,followersText,repoText2,followingText2,followersText2,githubUrl,recentRepoText,topReopText,topRepoText1;
 
@@ -43,6 +55,14 @@ public class ProfileActivity extends AppCompatActivity {
         typefaceBold = Typeface.createFromAsset(assetManager,String.format(Locale.US, "fonts/%s", "gothicb.ttf"));
 
         initializeComponents();
+
+        Intent intent = getIntent();
+
+        Gson gson = new Gson();
+
+        user = gson.fromJson(intent.getStringExtra(ApiData.INTENT_USER),GitHubUser.class);
+
+        setUserValues();
     }
 
     void initializeComponents()
@@ -65,6 +85,9 @@ public class ProfileActivity extends AppCompatActivity {
         topReopText = (TextView)findViewById(R.id.top_repo_text);
         topRepoText1 = (TextView)findViewById(R.id.top_repo_text2);
 
+        backgroundImage = (ImageView)findViewById(R.id.cover_image);
+        profileImage = (CircularImageView)findViewById(R.id.profile_image);
+
         //Setting the typeface
         shareProfile.setTypeface(typeface);
 
@@ -82,5 +105,25 @@ public class ProfileActivity extends AppCompatActivity {
         recentRepoText.setTypeface(typeface);
         topReopText.setTypeface(typefaceBold);
         topRepoText1.setTypeface(typeface);
+    }
+
+    void setUserValues()
+    {
+        Glide.with(this)
+                .load(user.profileImageUrl)
+                .placeholder(R.color.primary)
+                .into(backgroundImage);
+        Glide.with(this)
+                .load(user.profileImageUrl)
+                .placeholder(R.drawable.ic_person_black_24dp)
+                .into(profileImage);
+
+        nameText.setText(user.fullName);
+        usernameText.setText(user.Username);
+        followersText.setText(user.followersCount);
+        followingText.setText(user.followingCount);
+        repoText.setText(user.reposCount);
+        githubUrl.setText(user.profileUrl.replace("https://",""));
+
     }
 }

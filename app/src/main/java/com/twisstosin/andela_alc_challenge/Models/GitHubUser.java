@@ -10,6 +10,10 @@ public class GitHubUser {
     public String profileImageUrl;
     public String Username;
     public String profileUrl;
+    public String fullName;
+    public String followersCount;
+    public String followingCount;
+    public String reposCount;
 
     public GitHubUser(String profileUrl, String username, String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;

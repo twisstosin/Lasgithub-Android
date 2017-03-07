@@ -1,5 +1,7 @@
 package com.twisstosin.andela_alc_challenge;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,11 +15,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.twisstosin.andela_alc_challenge.Adapters.CustomRecyclerAdapter;
 import com.twisstosin.andela_alc_challenge.Adapters.RecyclerItemListener;
 import com.twisstosin.andela_alc_challenge.Models.GitHubUser;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     CustomRecyclerAdapter aud;
     TextView emptyListText;
     List<GitHubUser> users = null;
+
+    JSONParser jsonParser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = (RecyclerView)findViewById(R.id.list_view);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        //Initializing empty recyclerview for refreshlayout to work properly
+        recyclerView.setAdapter(new CustomRecyclerAdapter(this,new ArrayList<GitHubUser>()));
+
+        //Initializing JSONParser
+        jsonParser = new JSONParser();
 
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.refresher);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
@@ -50,8 +62,49 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.addOnItemTouchListener(new RecyclerItemListener(this, recyclerView, new RecyclerItemListener.RecyclerTouchListener() {
                     @Override
-                    public void onClickItem(View v, int position) {
-                        startActivity(new Intent(MainActivity.this,ProfileActivity.class));
+                    public void onClickItem(View v, final int position) {
+
+                        final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this, R.style.AppTheme_Dark_Dialog);
+                        progressDialog.setMessage("Getting Profile");
+                        progressDialog.setCanceledOnTouchOutside(false);
+                        progressDialog.show();
+
+                        AsyncTask<Void, GitHubUser, GitHubUser> task = new AsyncTask<Void, GitHubUser, GitHubUser>(){
+
+                            @Override
+                            protected GitHubUser doInBackground(Void... params) {
+                                GitHubUser response = null;
+                                try {
+                                    response = jsonParser.getProfile(users.get(position));
+
+                                } catch (final Exception e) {
+                                    //createAndShowDialogFromTask(e, "Error");
+                                    new Dialog(MainActivity.this).setTitle(e.getMessage());
+                                }
+
+                                return response;
+                            }
+
+                            @Override
+                            protected void onPostExecute(GitHubUser result) {
+                                progressDialog.dismiss();
+                                if(result != null)
+                                {
+                                    Gson gson = new Gson();
+                                    String user = gson.toJson(result);
+                                    Intent intent = new Intent(MainActivity.this,ProfileActivity.class);
+
+                                    intent.putExtra(ApiData.INTENT_USER,user);
+                                    startActivity(intent);
+
+                                }
+                                else
+                                {
+                                    Toast.makeText(MainActivity.this, "Bad Internet Connection", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        };
+                        runAsyncTask(task);
                     }
 
                     @Override
@@ -63,6 +116,12 @@ public class MainActivity extends AppCompatActivity {
             refreshItemsFromTable();
     }
 
+
+
+    private AsyncTask<Void, GitHubUser, GitHubUser> runAsyncTask(AsyncTask<Void, GitHubUser, GitHubUser> task) {
+        return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
     private void refreshItemsFromTable() {
         Log.d("JSONPack","Started Refresh");
         emptyListText.setVisibility(View.GONE);
@@ -70,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>(){
             @Override
             protected Void doInBackground(Void... params) {
-                    JSONParser jsonParser = new JSONParser();
+
                 List<GitHubUser> gitHubUserList = null;
                 try {
                     gitHubUserList = jsonParser.getUsers();
@@ -111,11 +170,11 @@ public class MainActivity extends AppCompatActivity {
                 return null;
             }
     };
-        runAsyncTask(task);
+        runAsyncTask(task,"");
     }
 
 
-    private AsyncTask<Void, Void, Void> runAsyncTask(AsyncTask<Void, Void, Void> task) {
+    private AsyncTask<Void, Void, Void> runAsyncTask(AsyncTask<Void, Void, Void> task,String id) {
         return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -136,14 +195,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createAndShowDialogFromTask(final Exception exception) {
-//        getActivity().runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
         createAndShowDialog(exception, "Could not refresh");
-//                refreshLayout.setRefreshing(false);
-//                if(noteList == null)
-//                {
-//                    emptyListText.setVisibility(View.VISIBLE);
-//                }
     }
 }

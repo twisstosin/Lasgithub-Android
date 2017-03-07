@@ -12,7 +12,7 @@
             <ImageView
                 android:layout_height="300dp"
                 android:layout_width="match_parent"
-                android:id="@+id/cover"
+                android:id="@+id/cover_image"
                 android:src="@drawable/davido"
                 android:scaleType="centerCrop"
                 app:layout_anchorGravity="bottom|end" />
