@@ -125,5 +125,16 @@ public class ProfileActivity extends AppCompatActivity {
         repoText.setText(user.reposCount);
         githubUrl.setText(user.profileUrl.replace("https://",""));
 
+        shareProfile.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            String formattedString = "Check out this awesome developer "+"@"+user.Username+", "+user.profileUrl+".";
+            sendIntent.putExtra(Intent.EXTRA_TEXT, formattedString);
+            sendIntent.setType("text/plain");
+            startActivity(Intent.createChooser(sendIntent, "Share Profile With"));
+        }
+    });
     }
 }
