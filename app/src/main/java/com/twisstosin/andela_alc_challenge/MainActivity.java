@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.twisstosin.andela_alc_challenge.Adapters.CustomRecyclerAdapter;
 import com.twisstosin.andela_alc_challenge.Adapters.RecyclerItemListener;
+import com.twisstosin.andela_alc_challenge.Models.ApiData;
 import com.twisstosin.andela_alc_challenge.Models.GitHubUser;
 
 import java.io.UnsupportedEncodingException;

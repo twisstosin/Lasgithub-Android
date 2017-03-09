@@ -70,6 +70,7 @@ public class CustomRecyclerAdapter extends RecyclerView.Adapter<CustomRecyclerAd
 
             Glide.with(context)
                     .load(gitHubUser.profileImageUrl)
+                    .asBitmap()
                     .placeholder(R.drawable.ic_person_black_24dp)
                     .into(holder.imageView);
 

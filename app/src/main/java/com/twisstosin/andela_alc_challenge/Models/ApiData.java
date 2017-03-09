@@ -1,4 +1,4 @@
-package com.twisstosin.andela_alc_challenge;
+package com.twisstosin.andela_alc_challenge.Models;
 
 /**
  * Created by twisstosin on 3/5/2017.

@@ -4,6 +4,7 @@ package com.twisstosin.andela_alc_challenge;
 
 import android.util.Log;
 
+import com.twisstosin.andela_alc_challenge.Models.ApiData;
 import com.twisstosin.andela_alc_challenge.Models.GitHubUser;
 
 import org.json.JSONArray;
@@ -12,7 +13,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,5 +135,31 @@ class JSONParser {
             Log.d("JSONPack", "Exeption with tried "+ e.getLocalizedMessage());
         }
         return user;
+    }
+
+    public String[] getTopRepo (GitHubUser gitHubUser) {
+        String[] repo = null;
+
+        String url =  ApiData.API_ROOT_URL+"/users/"+gitHubUser.Username+"/repos?sort=updated";
+        Log.d("JSONPack", "Started trying");
+        try {
+            JSONObject objects = getJsonObject(url);
+            JSONArray jsonArray = objects.names();
+            Log.d("JSONPack", "Checked");
+            if(jsonArray != null) {
+                Log.d("JSONPack", "Checked2");
+
+                String fullName = jsonArray.getJSONObject(0).getString("name");
+
+                String starCount = jsonArray.getJSONObject(0).getString("stargazers_count");
+
+                repo = new String[]{fullName,starCount};
+            }
+            Log.d("JSONPack", "Ended Try");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("JSONPack", "Exeption with tried "+ e.getLocalizedMessage());
+        }
+        return repo;
     }
 }
