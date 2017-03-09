@@ -24,7 +24,10 @@
             android:columnWidth="400dp"
             android:listSelector="#00000000"
             android:numColumns="1"
-            android:stretchMode="columnWidth" />
+            android:stretchMode="columnWidth"
+            android:scrollbarStyle="insideOverlay"
+            android:scrollbars="vertical"
+            android:scrollbarSize="3dp"/>
     </android.support.v4.widget.SwipeRefreshLayout>
     <TextView
         android:id="@+id/empty_users_text"
