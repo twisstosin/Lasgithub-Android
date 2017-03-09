@@ -35,7 +35,8 @@ public class ProfileActivity extends AppCompatActivity {
     TextView nameText,usernameText,repoText,followingText,followersText,repoText2,followingText2,followersText2,githubUrl,recentRepoText,topReopText,topRepoText1;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
@@ -86,7 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
         backgroundImage = (ImageView)findViewById(R.id.cover_image);
         profileImage = (CircularImageView)findViewById(R.id.profile_image);
 
-        //Setting the typeface
+        //Setting the typefaces
         shareProfile.setTypeface(typeface);
 
         nameText.setTypeface(typefaceBold);
@@ -124,16 +125,17 @@ public class ProfileActivity extends AppCompatActivity {
         repoText.setText(user.reposCount);
         githubUrl.setText(user.profileUrl.replace("https://",""));
 
-        shareProfile.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            String formattedString = "Check out this awesome developer "+"@"+user.Username+", "+user.profileUrl+".";
-            sendIntent.putExtra(Intent.EXTRA_TEXT, formattedString);
-            sendIntent.setType("text/plain");
-            startActivity(Intent.createChooser(sendIntent, "Share Profile With"));
-        }
-    });
+        shareProfile.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                String formattedString = "Check out this awesome developer "+"@"+user.Username+", "+user.profileUrl+".";
+                sendIntent.putExtra(Intent.EXTRA_TEXT, formattedString);
+                sendIntent.setType("text/plain");
+                startActivity(Intent.createChooser(sendIntent, "Share Profile With"));
+            }
+        });
     }
 }

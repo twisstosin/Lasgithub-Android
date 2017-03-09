@@ -11,7 +11,8 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 public class App extends Application {
 
     @Override
-    public void onCreate() {
+    public void onCreate()
+    {
         super.onCreate();
     //    Toast.makeText(this, "App Started", Toast.LENGTH_SHORT).show();
 

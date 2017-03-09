@@ -4,10 +4,10 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
     JSONParser jsonParser;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -79,65 +80,67 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        recyclerView.addOnItemTouchListener(new RecyclerItemListener(this, recyclerView, new RecyclerItemListener.RecyclerTouchListener() {
+        recyclerView.addOnItemTouchListener(new RecyclerItemListener(this, recyclerView, new RecyclerItemListener.RecyclerTouchListener()
+        {
+            @Override
+            public void onClickItem(View v, final int position) {
+
+                final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this, R.style.AppTheme_Dark_Dialog);
+                progressDialog.setMessage("Getting Profile");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
+
+                AsyncTask<Void, GitHubUser, GitHubUser> task = new AsyncTask<Void, GitHubUser, GitHubUser>(){
+
                     @Override
-                    public void onClickItem(View v, final int position) {
+                    protected GitHubUser doInBackground(Void... params) {
+                        GitHubUser response = null;
+                        try {
+                            response = jsonParser.getProfile(users.get(position));
 
-                        final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this, R.style.AppTheme_Dark_Dialog);
-                        progressDialog.setMessage("Getting Profile");
-                        progressDialog.setCanceledOnTouchOutside(false);
-                        progressDialog.show();
+                        } catch (final Exception e) {
+                            //createAndShowDialogFromTask(e, "Error");
+                            new Dialog(MainActivity.this).setTitle(e.getMessage());
+                        }
 
-                        AsyncTask<Void, GitHubUser, GitHubUser> task = new AsyncTask<Void, GitHubUser, GitHubUser>(){
-
-                            @Override
-                            protected GitHubUser doInBackground(Void... params) {
-                                GitHubUser response = null;
-                                try {
-                                    response = jsonParser.getProfile(users.get(position));
-
-                                } catch (final Exception e) {
-                                    //createAndShowDialogFromTask(e, "Error");
-                                    new Dialog(MainActivity.this).setTitle(e.getMessage());
-                                }
-
-                                return response;
-                            }
-
-                            @Override
-                            protected void onPostExecute(GitHubUser result) {
-                                progressDialog.dismiss();
-                                if(result != null)
-                                {
-                                    Gson gson = new Gson();
-                                    String user = gson.toJson(result);
-                                    Intent intent = new Intent(MainActivity.this,ProfileActivity.class);
-
-                                    intent.putExtra(ApiData.INTENT_USER,user);
-                                    startActivity(intent);
-
-                                }
-                                else
-                                {
-                                    Toast.makeText(MainActivity.this, "Bad Internet Connection", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        };
-                        runAsyncTask(task);
+                        return response;
                     }
 
                     @Override
-                    public void onLongClickItem(View v, int position) {
+                    protected void onPostExecute(GitHubUser result) {
+                        progressDialog.dismiss();
+                        if(result != null)
+                        {
+                            Gson gson = new Gson();
+                            String user = gson.toJson(result);
+                            Intent intent = new Intent(MainActivity.this,ProfileActivity.class);
 
+                            intent.putExtra(ApiData.INTENT_USER,user);
+                            startActivity(intent);
+
+                        }
+                        else
+                        {
+                            Toast.makeText(MainActivity.this, "Bad Internet Connection", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }));
+                };
+                runAsyncTask(task);
+            }
 
-            swipeRefresh();
+            @Override
+            public void onLongClickItem(View v, int position) {
+
+            }
+        }));
+
+        swipeRefresh();
     }
 
 
 
-    private AsyncTask<Void, GitHubUser, GitHubUser> runAsyncTask(AsyncTask<Void, GitHubUser, GitHubUser> task) {
+    private AsyncTask<Void, GitHubUser, GitHubUser> runAsyncTask(AsyncTask<Void, GitHubUser, GitHubUser> task)
+    {
         return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -165,7 +168,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void refreshItemsFromTable() {
+    private void refreshItemsFromTable()
+    {
         Log.d("JSONPack","Started Refresh");
 
         AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>(){
@@ -183,51 +187,52 @@ public class MainActivity extends AppCompatActivity {
 
                 final List<GitHubUser> finalGitHubUserList = gitHubUserList;
                 runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(finalGitHubUserList != null) {
-                                if(finalGitHubUserList.size()!=0)
-                                {
-                                    if(users != null)
+                    @Override
+                    public void run() {
+                        if(finalGitHubUserList != null) {
+                            if(finalGitHubUserList.size()!=0)
+                            {
+                                if(users != null)
                                     users.addAll(finalGitHubUserList);
-                                    else
-                                        users = finalGitHubUserList;
+                                else
+                                    users = finalGitHubUserList;
 
-                                    //aud = new CustomRecyclerAdapter(MainActivity.this, users);
-                                    aud.notifyDataSetChanged();
-                                    //recyclerView.setAdapter(aud);
-                                    swipeRefreshLayout.setRefreshing(false);
-                                    loadMore.setVisibility(View.GONE);
-                                }
-                                else
-                                {
-                                    Toast.makeText(MainActivity.this, "No Users to Display", Toast.LENGTH_SHORT).show();
-                                    //refreshLayout.setVisibility(View.GONE);
-                                    swipeRefreshLayout.setRefreshing(false);
-                                    loadMore.setVisibility(View.GONE);
-                                }
+                                //aud = new CustomRecyclerAdapter(MainActivity.this, users);
+                                aud.notifyDataSetChanged();
+                                //recyclerView.setAdapter(aud);
+                                swipeRefreshLayout.setRefreshing(false);
+                                loadMore.setVisibility(View.GONE);
                             }
-                            else {
-                                if(refing)
-                                {
-                                    Toast.makeText(MainActivity.this, "Null", Toast.LENGTH_SHORT).show();
-                                    emptyListText.setVisibility(View.VISIBLE);
-                                    swipeRefreshLayout.setRefreshing(false);
-                                }
-                                else
+                            else
+                            {
+                                Toast.makeText(MainActivity.this, "No Users to Display", Toast.LENGTH_SHORT).show();
+                                //refreshLayout.setVisibility(View.GONE);
+                                swipeRefreshLayout.setRefreshing(false);
                                 loadMore.setVisibility(View.GONE);
                             }
                         }
-                    });
+                        else {
+                            if(refing)
+                            {
+                                Toast.makeText(MainActivity.this, "Null", Toast.LENGTH_SHORT).show();
+                                emptyListText.setVisibility(View.VISIBLE);
+                                swipeRefreshLayout.setRefreshing(false);
+                            }
+                            else
+                                loadMore.setVisibility(View.GONE);
+                        }
+                    }
+                });
 
                 return null;
             }
-    };
+        };
         runAsyncTask(task,"");
     }
 
 
-    private boolean isLastItemDisplaying(RecyclerView recyclerView) {
+    private boolean isLastItemDisplaying(RecyclerView recyclerView)
+    {
         if (recyclerView.getAdapter().getItemCount() != 0) {
             int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
             if (lastVisibleItemPosition != RecyclerView.NO_POSITION && lastVisibleItemPosition == recyclerView.getAdapter().getItemCount() - 1)
@@ -237,11 +242,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private AsyncTask<Void, Void, Void> runAsyncTask(AsyncTask<Void, Void, Void> task,String id) {
+    private AsyncTask<Void, Void, Void> runAsyncTask(AsyncTask<Void, Void, Void> task,String id)
+    {
         return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    private void createAndShowDialog(Exception exception, String title) {
+    private void createAndShowDialog(Exception exception, String title)
+    {
         Throwable ex = exception;
         if(exception.getCause() != null){
             ex = exception.getCause();
@@ -249,7 +256,8 @@ public class MainActivity extends AppCompatActivity {
         createAndShowDialog(ex.getMessage()+"\nCheck your internet connection", title);
     }
 
-    private void createAndShowDialog(final String message, final String title) {
+    private void createAndShowDialog(final String message, final String title)
+    {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setMessage(message);
@@ -257,7 +265,8 @@ public class MainActivity extends AppCompatActivity {
         builder.create().show();
     }
 
-    private void createAndShowDialogFromTask(final Exception exception) {
+    private void createAndShowDialogFromTask(final Exception exception)
+    {
         createAndShowDialog(exception, "Could not refresh");
     }
 }
