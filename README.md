@@ -1,4 +1,4 @@
-# Lasgitgub
+# Lasgithub
 ![alt tag](https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/mipmap-hdpi/ic_launcher.png)
 
 #Screenshots
@@ -8,6 +8,7 @@
 <img src="https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot_2.png" width="40%"/>
 <img src="https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot_3.png" width="40%"/>
 </div>
+
 # License
 
 Copyright 2017 Tosin Omotoyinbo

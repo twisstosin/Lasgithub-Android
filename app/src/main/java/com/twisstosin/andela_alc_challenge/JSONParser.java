@@ -25,7 +25,17 @@ import okhttp3.Response;
  */
 class JSONParser {
     private OkHttpClient client = new OkHttpClient();
+    private int pageCount = 1;
 
+    public void resetPageCount() {
+        this.pageCount = 1;
+    }
+
+    public boolean isListEnd() {
+        return listEnd;
+    }
+
+    private boolean listEnd = false;
     // constructor
     JSONParser() {}
 
@@ -56,13 +66,14 @@ class JSONParser {
     List<GitHubUser> getUsers() throws UnsupportedEncodingException {
         List<GitHubUser> userList = null;
 
-        String url =  ApiData.API_ROOT_URL+"/search/users?q=+location:lagos+language:java";
+        String url =  ApiData.API_ROOT_URL+"/search/users?q=+location:lagos+language:java&page="+pageCount;
         Log.d("JSONPack", "Started trying");
         try {
             JSONObject objecter = getJsonObject(url);
             JSONArray objects = objecter.getJSONArray("items");
             Log.d("JSONPack", "Checked");
             if(objects != null) {
+                if(objects.length() != 0){
                 userList = new ArrayList<>();
                 Log.d("JSONPack", "Checked2");
                 for (int i = 0; i < objects.length(); i++) {
@@ -80,6 +91,10 @@ class JSONParser {
 
                     userList.add(user);
                 }
+                pageCount = pageCount+1;
+                }
+                else
+                    listEnd = true;
             }
             Log.d("JSONPack", "Ended Try");
         } catch (Exception e) {

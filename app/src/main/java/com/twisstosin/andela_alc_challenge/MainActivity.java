@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +32,10 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     CustomRecyclerAdapter aud;
     TextView emptyListText;
-    List<GitHubUser> users = null;
+    ProgressBar loadMore;
+    List<GitHubUser> users = new ArrayList<>();
+
+    Boolean refing = false;
 
     JSONParser jsonParser;
     @Override
@@ -41,11 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
         emptyListText = (TextView)findViewById(R.id.empty_users_text);
         recyclerView = (RecyclerView)findViewById(R.id.list_view);
+        loadMore = (ProgressBar)findViewById(R.id.progress_bar);
         linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         //Initializing empty recyclerview for refreshlayout to work properly
-        recyclerView.setAdapter(new CustomRecyclerAdapter(this,new ArrayList<GitHubUser>()));
+        aud = new CustomRecyclerAdapter(this,users);
+        recyclerView.setAdapter(aud);
 
         //Initializing JSONParser
         jsonParser = new JSONParser();
@@ -56,7 +62,19 @@ public class MainActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshItemsFromTable();
+                swipeRefresh();
+            }
+        });
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                if(isLastItemDisplaying(recyclerView)) //check for scroll down
+                {
+                    loadMoreRefresh();
+                }
             }
         });
 
@@ -113,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }));
 
-            refreshItemsFromTable();
+            swipeRefresh();
     }
 
 
@@ -122,10 +140,33 @@ public class MainActivity extends AppCompatActivity {
         return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    private void refreshItemsFromTable() {
-        Log.d("JSONPack","Started Refresh");
+    private void swipeRefresh()
+    {
+        refing = true;
+        users.clear();
+        jsonParser.resetPageCount();
         emptyListText.setVisibility(View.GONE);
         swipeRefreshLayout.setRefreshing(true);
+        refreshItemsFromTable();
+    }
+
+    private void loadMoreRefresh()
+    {
+        refing = false;
+        loadMore.setVisibility(View.VISIBLE);
+        if(jsonParser.isListEnd()) {
+            Toast.makeText(MainActivity.this, "End of List", Toast.LENGTH_SHORT).show();
+            loadMore.setVisibility(View.GONE);
+        }
+        else
+        {
+            refreshItemsFromTable();
+        }
+    }
+
+    private void refreshItemsFromTable() {
+        Log.d("JSONPack","Started Refresh");
+
         AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>(){
             @Override
             protected Void doInBackground(Void... params) {
@@ -146,23 +187,34 @@ public class MainActivity extends AppCompatActivity {
                             if(finalGitHubUserList != null) {
                                 if(finalGitHubUserList.size()!=0)
                                 {
-                                    users = finalGitHubUserList;
-                                    aud = new CustomRecyclerAdapter(MainActivity.this, users);
+                                    if(users != null)
+                                    users.addAll(finalGitHubUserList);
+                                    else
+                                        users = finalGitHubUserList;
 
-                                    recyclerView.setAdapter(aud);
+                                    //aud = new CustomRecyclerAdapter(MainActivity.this, users);
+                                    aud.notifyDataSetChanged();
+                                    //recyclerView.setAdapter(aud);
                                     swipeRefreshLayout.setRefreshing(false);
+                                    loadMore.setVisibility(View.GONE);
                                 }
                                 else
                                 {
                                     Toast.makeText(MainActivity.this, "No Users to Display", Toast.LENGTH_SHORT).show();
                                     //refreshLayout.setVisibility(View.GONE);
                                     swipeRefreshLayout.setRefreshing(false);
+                                    loadMore.setVisibility(View.GONE);
                                 }
                             }
                             else {
-                                Toast.makeText(MainActivity.this, "Null", Toast.LENGTH_SHORT).show();
-                                emptyListText.setVisibility(View.VISIBLE);
-                                swipeRefreshLayout.setRefreshing(false);
+                                if(refing)
+                                {
+                                    Toast.makeText(MainActivity.this, "Null", Toast.LENGTH_SHORT).show();
+                                    emptyListText.setVisibility(View.VISIBLE);
+                                    swipeRefreshLayout.setRefreshing(false);
+                                }
+                                else
+                                loadMore.setVisibility(View.GONE);
                             }
                         }
                     });
@@ -171,6 +223,16 @@ public class MainActivity extends AppCompatActivity {
             }
     };
         runAsyncTask(task,"");
+    }
+
+
+    private boolean isLastItemDisplaying(RecyclerView recyclerView) {
+        if (recyclerView.getAdapter().getItemCount() != 0) {
+            int lastVisibleItemPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+            if (lastVisibleItemPosition != RecyclerView.NO_POSITION && lastVisibleItemPosition == recyclerView.getAdapter().getItemCount() - 1)
+                return true;
+        }
+        return false;
     }
 
 
