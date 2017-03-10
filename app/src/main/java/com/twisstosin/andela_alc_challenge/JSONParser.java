@@ -62,6 +62,20 @@ class JSONParser {
         }
         return Jobject;
     }
+    private JSONArray getJsonArray(String url) throws JSONException {
+        // Making HTTP request
+        JSONArray jsonArray = null;
+        try {
+
+            String jsonData = run(url);
+
+            jsonArray = new JSONArray(jsonData);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return jsonArray;
+    }
 
     List<GitHubUser> getUsers() throws UnsupportedEncodingException {
         List<GitHubUser> userList = null;
@@ -143,8 +157,7 @@ class JSONParser {
         String url =  ApiData.API_ROOT_URL+"/users/"+gitHubUser.Username+"/repos?sort=updated";
         Log.d("JSONPack", "Started trying");
         try {
-            JSONObject objects = getJsonObject(url);
-            JSONArray jsonArray = objects.names();
+            JSONArray jsonArray = getJsonArray(url);
             Log.d("JSONPack", "Checked");
             if(jsonArray != null) {
                 Log.d("JSONPack", "Checked2");
@@ -152,6 +165,10 @@ class JSONParser {
                 String fullName = jsonArray.getJSONObject(0).getString("name");
 
                 String starCount = jsonArray.getJSONObject(0).getString("stargazers_count");
+                if(starCount.equals("1"))
+                    starCount = starCount+" Star";
+                else
+                    starCount = starCount+" Stars";
 
                 repo = new String[]{fullName,starCount};
             }

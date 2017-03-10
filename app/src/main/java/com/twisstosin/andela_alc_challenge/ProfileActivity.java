@@ -3,15 +3,19 @@ package com.twisstosin.andela_alc_challenge;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -31,8 +35,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     ImageView backgroundImage;
     CircularImageView profileImage;
+    RelativeLayout repoLayout;
 
-    TextView nameText,usernameText,repoText,followingText,followersText,repoText2,followingText2,followersText2,githubUrl,recentRepoText,topReopText,topRepoText1;
+    JSONParser jsonParser;
+
+    TextView nameText,usernameText,repoText,followingText,followersText,repoText2,followingText2,followersText2,githubUrl,recentRepoText, topRepoText,topRepoText1,refreshText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -44,6 +51,8 @@ public class ProfileActivity extends AppCompatActivity {
             Window w = getWindow();
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
+
+        jsonParser = new JSONParser();
 
         setContentView(R.layout.activity_profile);
 
@@ -67,6 +76,7 @@ public class ProfileActivity extends AppCompatActivity {
     void initializeComponents()
     {
         shareProfile = (Button)findViewById(R.id.share_btn);
+        repoLayout = (RelativeLayout)findViewById(R.id.repo_layout);
 
         nameText = (TextView)findViewById(R.id.name);
         usernameText = (TextView)findViewById(R.id.username);
@@ -81,8 +91,10 @@ public class ProfileActivity extends AppCompatActivity {
         githubUrl = (TextView)findViewById(R.id.github_url);
         recentRepoText = (TextView)findViewById(R.id.repo_update_text);
 
-        topReopText = (TextView)findViewById(R.id.top_repo_text);
+        topRepoText = (TextView)findViewById(R.id.top_repo_text);
         topRepoText1 = (TextView)findViewById(R.id.top_repo_text2);
+
+        refreshText = (TextView)findViewById(R.id.tap_get_btn);
 
         backgroundImage = (ImageView)findViewById(R.id.cover_image);
         profileImage = (CircularImageView)findViewById(R.id.profile_image);
@@ -102,8 +114,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         githubUrl.setTypeface(typeface);
         recentRepoText.setTypeface(typeface);
-        topReopText.setTypeface(typefaceBold);
+        topRepoText.setTypeface(typefaceBold);
         topRepoText1.setTypeface(typeface);
+
+        refreshText.setTypeface(typeface);
     }
 
     void setUserValues()
@@ -125,6 +139,9 @@ public class ProfileActivity extends AppCompatActivity {
         repoText.setText(user.reposCount);
         githubUrl.setText(user.profileUrl.replace("https://",""));
 
+        //try to get last updated repo details
+        refreshRepoFromApi();
+
         shareProfile.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -137,5 +154,61 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(sendIntent, "Share Profile With"));
             }
         });
+
+        refreshText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                refreshRepoFromApi();
+            }
+        });
+    }
+
+    private void refreshRepoFromApi()
+    {
+        refreshText.setVisibility(View.GONE);
+        Log.d("JSONPack","Started Refresh");
+
+        AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>(){
+            @Override
+            protected Void doInBackground(Void... params) {
+
+                String[] gitHubRepo = null;
+                try {
+                    gitHubRepo = jsonParser.getTopRepo(user);
+                    Log.d("JSONPack","Tried to get users");
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                    Log.d("JSONPack","Exeption");
+                }
+
+                final String[] finalGitHubRepo = gitHubRepo;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(finalGitHubRepo != null) {
+                            if(finalGitHubRepo.length !=0)
+                            {
+                                topRepoText.setText(finalGitHubRepo[0]);
+                                topRepoText1.setText(finalGitHubRepo[1]);
+                                recentRepoText.setVisibility(View.VISIBLE);
+                                repoLayout.setVisibility(View.VISIBLE);
+                            }
+                            else
+                            {
+                                Toast.makeText(ProfileActivity.this, "No Repo to Display", Toast.LENGTH_SHORT).show();
+                                //refreshLayout.setVisibility(View.GONE);
+                            }
+                        }
+                        else {
+                                Toast.makeText(ProfileActivity.this, "Returned Null", Toast.LENGTH_SHORT).show();
+                                refreshText.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                return null;
+            }
+        };
+        App.runAsyncTask(task,"");
     }
 }

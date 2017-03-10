@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -151,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         jsonParser.resetPageCount();
         emptyListText.setVisibility(View.GONE);
         swipeRefreshLayout.setRefreshing(true);
-        refreshItemsFromTable();
+        refreshUsersFromApi();
     }
 
     private void loadMoreRefresh()
@@ -164,11 +163,11 @@ public class MainActivity extends AppCompatActivity {
         }
         else
         {
-            refreshItemsFromTable();
+            refreshUsersFromApi();
         }
     }
 
-    private void refreshItemsFromTable()
+    private void refreshUsersFromApi()
     {
         Log.d("JSONPack","Started Refresh");
 
@@ -227,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
                 return null;
             }
         };
-        runAsyncTask(task,"");
+        App.runAsyncTask(task,"");
     }
 
 
@@ -239,34 +238,5 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return false;
-    }
-
-
-    private AsyncTask<Void, Void, Void> runAsyncTask(AsyncTask<Void, Void, Void> task,String id)
-    {
-        return task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
-    private void createAndShowDialog(Exception exception, String title)
-    {
-        Throwable ex = exception;
-        if(exception.getCause() != null){
-            ex = exception.getCause();
-        }
-        createAndShowDialog(ex.getMessage()+"\nCheck your internet connection", title);
-    }
-
-    private void createAndShowDialog(final String message, final String title)
-    {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setMessage(message);
-        builder.setTitle(title);
-        builder.create().show();
-    }
-
-    private void createAndShowDialogFromTask(final Exception exception)
-    {
-        createAndShowDialog(exception, "Could not refresh");
     }
 }
