@@ -1,7 +1,7 @@
 # Lasgithub
 ![alt tag](https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/mipmap-hdpi/ic_launcher.png)
 
-#Screenshots
+# Screenshots
 <div align="center" markdown="1">
 
 <img src="https://github.com/twisstosin/Andela-ALC-Challenge/blob/master/app/src/main/res/drawable/screenshot.png" width="40%"/>
